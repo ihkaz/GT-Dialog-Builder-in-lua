@@ -204,17 +204,7 @@ Colors use the format `{Red, Green, Blue, Alpha}` where each value is 0-255:
 - **Transparent**: `{0, 0, 0, 0}`
 
 ### Growtopia Text Colors
-Common Growtopia color codes for `textcolor`:
-- `` `0`` - White
-- `` `1`` - Blue
-- `` `2`` - Green
-- `` `3`` - Cyan
-- `` `4`` - Red
-- `` `5`` - Magenta
-- `` `6`` - Yellow
-- `` `7`` - Light Gray
-- `` `8`` - Dark Gray
-- `` `9`` - Light Blue
+Common Growtopia color codes for `textcolor`
 
 ## Error Handling
 
