@@ -1,4 +1,4 @@
-ihkaz = {}
+local ihkaz = {}
 ihkaz.__index = ihkaz
 
 function ihkaz.logs(message, iserror)
