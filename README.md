@@ -1,114 +1,233 @@
 # GT-Dialog-Builder-in-lua
 
+A powerful and flexible dialog builder library for Growtopia Lua executors with comprehensive validation and error handling.
 
-# How to Load :
-```lua
--- in GentaHax:
-ihkaz = load(makeRequest("https://raw.githubusercontent.com/ihkaz/GT-Dialog-Builder-in-lua/refs/heads/main/DialogBuilder.lua","GET").content)()
--- if u run on Genta Hax Executor u don't need to do this:
-ihkaz.logfunc = LogToConsole -- Search ur executor function to log. make sure the function need 1 string parameter only
-ihkaz.runfunc = SendVariant
--- GL terserah hehe
-```
-# Function List
+## Features
+- ✅ **Method Chaining** - Build dialogs fluently
+- ✅ **Input Validation** - Comprehensive type checking and error messages
+- ✅ **Error Handling** - Built-in logging with stack traces
+- ✅ **Fallback Support** - Works with different executor environments
+- ✅ **Flexible Styling** - Support for colors, borders, and text formatting
 
-## Spacer
-#### • :addspacer(String size)
-```lua
-dialog = ihkaz.new()
-:addspacer("small")
-:build()
-```
+## Installation
 
-## Label
-#### • :addlabel(bool withicon, {String label, String size, ItemID id})
-```lua
-dialog = ihkaz.new()
-:addlabel(false,{label = "Aku Tidak Punya Icon",size = "small"})
-:addlabel(true,{label = "Aku Punya Icon",size = "small",id = 242})
-:build()
-```
-
-## Button
-#### • :addbutton(bool disable, {String value, String label})
-```lua
-dialog = ihkaz.new()
-:addbutton(false,{value = "ok_button", label = "OK"})
-:addbutton(true,{value = "disabled_btn", label = "Disabled Button"})
-:build()
-```
-
-## Small Text
-#### • :addsmalltext(String text)
-```lua
-dialog = ihkaz.new()
-:addsmalltext("This is small text")
-:addsmalltext("Another small text line")
-:build()
-```
-
-## Dialog Configuration
-#### • :setDialog({String name, String closelabel, String applylabel})
-```lua
-dialog = ihkaz.new()
-:addlabel(false,{label = "Example Dialog",size = "big"})
-:addbutton(false,{value = "ok", label = "OK"})
-:setDialog({
-  name = "example_dialog",
-  closelabel = "Cancel", 
-  applylabel = "Apply"
-})
-:build()
-```
-
-## Body Styling
-#### • :setbody({Table border, Table bg, String textcolor})
-```lua
-dialog = ihkaz.new()
-:setbody({
-  border = {255, 0, 0, 255},    -- Red border (R,G,B,A)
-  bg = {0, 0, 0, 200},          -- Dark background
-  textcolor = "`0"              -- White text color
-})
-:addlabel(false,{label = "Styled Dialog",size = "big"})
-:build()
-```
-
-## Complete Example
+### For GentaHax:
 ```lua
 ihkaz = load(makeRequest("https://raw.githubusercontent.com/ihkaz/GT-Dialog-Builder-in-lua/refs/heads/main/DialogBuilder.lua","GET").content)()
+```
+
+### For Other Executors:
+```lua
+ihkaz = load(makeRequest("https://raw.githubusercontent.com/ihkaz/GT-Dialog-Builder-in-lua/refs/heads/main/DialogBuilder.lua","GET").content)()
+-- Configure logging function (must accept 1 string parameter)
+ihkaz.logfunc = LogToConsole -- Replace with your executor's logging function
+-- Configure dialog execution function
+ihkaz.runfunc = SendVariant -- Replace with your executor's variant sender
+```
+
+## Quick Start
+
+```lua
+-- Simple dialog example
 local dialog = ihkaz.new()
-:setbody({
-  textcolor = "`0",
-  bg = {25, 25, 25, 255},
-  border = {100, 100, 100, 255}
-})
-:addlabel(false,{label = "Welcome Dialog",size = "big"})
-:addspacer("small")
-:addlabel(true,{label = "Player Information",size = "small",id = 18})
-:addsmalltext("Current Level: 125")
-:addsmalltext("Gems: 50,000")
-:addspacer("small")
-:addbutton(false,{value = "profile", label = "View Profile"})
-:addbutton(false,{value = "close", label = "Close"})
-:setDialog({
-  name = "welcome_dialog",
-  closelabel = "Exit",
-  applylabel = "OK"
-})
-:build()
+  :addlabel(false, {label = "Hello World", size = "big"})
+  :addbutton(false, {value = "ok", label = "OK"})
+  :setDialog({name = "hello_dialog"})
+  :showdialog() -- Build and show immediately
 ```
 
-## Parameter Details
+## API Reference
 
-### Size Options
-- `"small"` - Small size
-- `"big"` - Large size
+### Core Methods
 
-### Color Format
-- Colors use RGBA format: `{Red, Green, Blue, Alpha}`
-- Values range from 0-255
-- Alpha: 0 = transparent, 255 = opaque
+#### `ihkaz.new()`
+Creates a new dialog builder instance.
 
-### Text Color Codes
-- Growtopia Color Text
+#### `:build()`
+Returns the built dialog string without showing it.
+
+#### `:showdialog()`
+Builds and displays the dialog immediately.
+
+### Dialog Elements
+
+#### `:addspacer(size)`
+Adds a spacer element to create vertical spacing.
+
+**Parameters:**
+- `size` (string, optional): `"small"` or `"big"` (default: `"small"`)
+
+**Example:**
+```lua
+dialog:addspacer("small")
+dialog:addspacer("big")
+```
+
+#### `:addlabel(withicon, config)`
+Adds a text label, optionally with an icon.
+
+**Parameters:**
+- `withicon` (boolean): Whether to include an icon
+- `config` (table):
+  - `label` (string, required): The label text
+  - `size` (string, optional): `"small"` or `"big"` (default: `"small"`)
+  - `id` (number, required if withicon=true): Item ID for the icon
+
+**Examples:**
+```lua
+-- Simple label
+dialog:addlabel(false, {label = "Simple Label", size = "small"})
+
+-- Label with icon
+dialog:addlabel(true, {label = "With Icon", size = "big", id = 242})
+```
+
+#### `:addbutton(disable, config)`
+Adds a clickable button.
+
+**Parameters:**
+- `disable` (boolean): Whether the button should be disabled
+- `config` (table):
+  - `value` (string, required): The button's return value when clicked
+  - `label` (string, required): The button's display text
+
+**Examples:**
+```lua
+-- Active button
+dialog:addbutton(false, {value = "confirm", label = "Confirm"})
+
+-- Disabled button
+dialog:addbutton(true, {value = "disabled", label = "Disabled"})
+```
+
+#### `:addsmalltext(text)`
+Adds small descriptive text.
+
+**Parameters:**
+- `text` (string/any): Text content (will be converted to string)
+
+**Example:**
+```lua
+dialog:addsmalltext("This is small descriptive text")
+dialog:addsmalltext("Line 2 of small text")
+```
+
+### Dialog Configuration
+
+#### `:setDialog(config)`
+Configures the dialog window properties.
+
+**Parameters:**
+- `config` (table):
+  - `name` (string, required): Dialog identifier
+  - `closelabel` (string, optional): Custom close button text
+  - `applylabel` (string, optional): Custom apply button text
+
+**Example:**
+```lua
+dialog:setDialog({
+  name = "my_dialog",
+  closelabel = "Cancel",
+  applylabel = "Save"
+})
+```
+
+#### `:setbody(config)`
+Configures the dialog's visual appearance.
+
+**Parameters:**
+- `config` (table):
+  - `border` (table, optional): Border color as `{R, G, B, A}` (0-255)
+  - `bg` (table, optional): Background color as `{R, G, B, A}` (0-255)
+  - `textcolor` (string, optional): Growtopia color code
+
+**Example:**
+```lua
+dialog:setbody({
+  border = {255, 0, 0, 255},    -- Red border
+  bg = {0, 0, 0, 200},          -- Semi-transparent black background
+  textcolor = "`0"              -- White text
+})
+```
+
+## Advanced Examples
+
+### Styled Information Dialog
+```lua
+local dialog = ihkaz.new()
+  :setbody({
+    textcolor = "`0",
+    bg = {25, 25, 25, 255},
+    border = {100, 100, 100, 255}
+  })
+  :addlabel(false, {label = "Player Stats", size = "big"})
+  :addspacer("small")
+  :addlabel(true, {label = "Level Information", size = "small", id = 18})
+  :addsmalltext("Current Level: 125")
+  :addsmalltext("Experience: 45,230/50,000")
+  :addsmalltext("Gems: 50,000")
+  :addspacer("small")
+  :addbutton(false, {value = "levelup", label = "Level Up"})
+  :addbutton(false, {value = "close", label = "Close"})
+  :setDialog({
+    name = "player_stats",
+    closelabel = "Exit",
+    applylabel = "OK"
+  })
+  :showdialog()
+```
+
+### Menu Dialog with Multiple Options
+```lua
+local menu = ihkaz.new()
+  :addlabel(false, {label = "Main Menu", size = "big"})
+  :addspacer("small")
+  :addbutton(false, {value = "inventory", label = "Open Inventory"})
+  :addbutton(false, {value = "shop", label = "Visit Shop"})
+  :addbutton(false, {value = "friends", label = "Friends List"})
+  :addbutton(true, {value = "premium", label = "Premium Features (Locked)"})
+  :addspacer("small")
+  :addsmalltext("Select an option to continue")
+  :setDialog({name = "main_menu"})
+  :showdialog()
+```
+
+## Color Reference
+
+### RGBA Format
+Colors use the format `{Red, Green, Blue, Alpha}` where each value is 0-255:
+- **Red**: `{255, 0, 0, 255}`
+- **Green**: `{0, 255, 0, 255}`
+- **Blue**: `{0, 0, 255, 255}`
+- **Black**: `{0, 0, 0, 255}`
+- **White**: `{255, 255, 255, 255}`
+- **Transparent**: `{0, 0, 0, 0}`
+
+### Growtopia Text Colors
+Common Growtopia color codes for `textcolor`:
+- `` `0`` - White
+- `` `1`` - Blue
+- `` `2`` - Green
+- `` `3`` - Cyan
+- `` `4`` - Red
+- `` `5`` - Magenta
+- `` `6`` - Yellow
+- `` `7`` - Light Gray
+- `` `8`` - Dark Gray
+- `` `9`` - Light Blue
+
+## Error Handling
+
+The library includes comprehensive error handling:
+- **Input Validation**: All parameters are validated with descriptive error messages
+- **Stack Traces**: Errors include file and line information for debugging
+- **Graceful Fallbacks**: Works even if logging functions are unavailable
+
+
+## Contributing
+
+Feel free to contribute improvements, bug fixes, or additional dialog elements!
+
+## License
+
+This project is open source. Feel free to use and modify as needed.
