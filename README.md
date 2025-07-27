@@ -37,7 +37,7 @@ local dialog = ihkaz.new()
   :showdialog() -- Build and show immediately
 ```
 
-## RTTEX Import Feature *(Mobile Only)*
+## RTTEX Import Feature *(Mobile & GentaHax User Only)*
 
 ### `ihkaz.importrttex(config)`
 Downloads and saves RTTEX files from URLs to the Growtopia cache directory.
