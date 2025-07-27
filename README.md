@@ -8,6 +8,7 @@ A powerful and flexible dialog builder library for Growtopia Lua executors with 
 - ✅ **Error Handling** - Built-in logging with stack traces
 - ✅ **Fallback Support** - Works with different executor environments
 - ✅ **Flexible Styling** - Support for colors, borders, and text formatting
+- ✅ **RTTEX Import** - Download and save RTTEX files from URLs
 
 ## Installation
 
@@ -35,6 +36,51 @@ local dialog = ihkaz.new()
   :setDialog({name = "hello_dialog"})
   :showdialog() -- Build and show immediately
 ```
+
+## RTTEX Import Feature *(Mobile Only)*
+
+### `ihkaz.importrttex(config)`
+Downloads and saves RTTEX files from URLs to the Growtopia cache directory.
+
+> ⚠️ **Note**: This feature only works on mobile devices (Android). Desktop users should manually place RTTEX files in their game directory.
+
+**Parameters:**
+- `config` (table or array of tables): Configuration for files to download
+  - `url` (string, required): The URL to download the RTTEX file from
+  - `name` (string, required): The filename/path to save in cache (supports subdirectories)
+
+**Examples:**
+```lua
+-- Import single RTTEX file
+ihkaz.importrttex({
+  url = "https://example.com/file.rttex",
+  name = "custom_ui.rttex"
+})
+
+-- Import multiple RTTEX files
+ihkaz.importrttex({
+  {url = "https://example.com/button.rttex", name = "UI/button.rttex"},
+  {url = "https://example.com/icon.rttex", name = "ICONS/custom_icon.rttex"},
+  {url = "https://example.com/background.rttex", name = "BG/custom_bg.rttex"}
+})
+
+-- Import to subdirectory (automatically creates directories)
+ihkaz.importrttex({
+  url = "https://example.com/special.rttex",
+  name = "CUSTOM/SAVES/special_ui.rttex"
+})
+```
+
+**Features:**
+- ✅ **Auto Directory Creation** - Creates subdirectories automatically
+- ✅ **Batch Import** - Import multiple files in one call
+- ✅ **Error Handling** - Validates URLs and handles download failures
+- ✅ **Progress Logging** - Shows import status for each file
+
+**Storage Location (Android Only):**
+Files are saved to: `/storage/emulated/0/Android/data/com.rtsoft.growtopia/files/cache/interface/large/`
+
+> 💡 **For Desktop Users**: Manually place RTTEX files in your Growtopia installation's interface folder.
 
 ## API Reference
 
@@ -192,6 +238,54 @@ local menu = ihkaz.new()
   :showdialog()
 ```
 
+### Importing Custom Assets *(Mobile Only)*
+```lua
+-- Import custom UI elements for your dialogs (Android only)
+ihkaz.importrttex({
+  {url = "https://myserver.com/ui/button_red.rttex", name = "CUSTOM/button_red.rttex"},
+  {url = "https://myserver.com/ui/button_blue.rttex", name = "CUSTOM/button_blue.rttex"},
+  {url = "https://myserver.com/backgrounds/wood.rttex", name = "BG/wood_texture.rttex"}
+})
+
+-- Files will be saved to (Android):
+-- /storage/.../cache/interface/large/CUSTOM/button_red.rttex
+-- /storage/.../cache/interface/large/CUSTOM/button_blue.rttex  
+-- /storage/.../cache/interface/large/BG/wood_texture.rttex
+
+-- Desktop users: Manually place files in Growtopia/interface/ folder
+```
+
+### Complete Example with RTTEX Import *(Mobile)*
+```lua
+-- First, import custom RTTEX files (Android only)
+ihkaz.importrttex({
+  {url = "https://cdn.example.com/custom_button.rttex", name = "UI/custom_button.rttex"},
+  {url = "https://cdn.example.com/gold_border.rttex", name = "BORDERS/gold.rttex"}
+})
+
+-- Then create a dialog (works on both mobile and desktop)
+local dialog = ihkaz.new()
+  :setbody({
+    textcolor = "`6",  -- Gold text
+    bg = {25, 25, 25, 255},
+    border = {255, 215, 0, 255}  -- Gold border
+  })
+  :addlabel(false, {label = "Premium Shop", size = "big"})
+  :addspacer("small")
+  :addlabel(true, {label = "Special Items", size = "small", id = 1796})
+  :addsmalltext("Limited time offers available!")
+  :addspacer("small")
+  :addbutton(false, {value = "buy_gems", label = "Buy Gems"})
+  :addbutton(false, {value = "premium_pack", label = "Premium Pack"})
+  :addbutton(false, {value = "close", label = "Close"})
+  :setDialog({
+    name = "premium_shop",
+    closelabel = "Exit",
+    applylabel = "Purchase"
+  })
+  :showdialog()
+```
+
 ## Color Reference
 
 ### RGBA Format
@@ -203,7 +297,14 @@ Colors use the format `{Red, Green, Blue, Alpha}` where each value is 0-255:
 - **White**: `{255, 255, 255, 255}`
 
 ### Growtopia Text Colors
-Common Growtopia color codes for `textcolor`
+Common Growtopia color codes for `textcolor`:
+- **White**: `\`0`
+- **Yellow**: `\`2`
+- **Green**: `\`4` 
+- **Red**: `\`4`
+- **Blue**: `\`1`
+- **Pink**: `\`p`
+- **Gray**: `\`o`
 
 ## Error Handling
 
@@ -211,7 +312,23 @@ The library includes comprehensive error handling:
 - **Input Validation**: All parameters are validated with descriptive error messages
 - **Stack Traces**: Errors include file and line information for debugging
 - **Graceful Fallbacks**: Works even if logging functions are unavailable
+- **RTTEX Import Validation**: Checks URLs and file names before attempting downloads
 
+## Best Practices
+
+### RTTEX File Management *(Mobile Only)*
+- Use descriptive subdirectory names (e.g., `UI/`, `ICONS/`, `BG/`)
+- Keep file names clear and consistent
+- Test URLs before batch importing
+- Check available storage space for large files
+- **Mobile users**: Use `ihkaz.importrttex()` for automatic download
+- **Desktop users**: Manually place RTTEX files in game directory
+
+### Dialog Design
+- Use consistent color schemes across dialogs
+- Test dialogs on different screen sizes
+- Provide clear button labels and meaningful values
+- Use spacers appropriately for visual hierarchy
 
 ## Contributing
 
