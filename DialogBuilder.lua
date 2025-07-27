@@ -1,5 +1,9 @@
-local ihkaz = {}
+local ihkaz = {
+  logfunc,
+  runfunc
+}
 ihkaz.__index = ihkaz
+
 
 function ihkaz.logs(message, iserror)
   local tag = iserror and "`4ERROR``" or "LOGS"
@@ -12,7 +16,7 @@ function ihkaz.logs(message, iserror)
     end
   end
   
-  return logToConsole(logMessage)
+  return ihkaz.logfunc(logMessage) or logToConsole(logMessage)
 end
 
 function ihkaz.new()
@@ -197,6 +201,13 @@ function ihkaz:build()
     ihkaz.logs("Warning: building empty dialog with no elements", false)
   end
   return table.concat(self.result, "\n")
+end
+
+function ihkaz:showdialog()
+  if #self.result == 0 then
+    ihkaz.logs("Warning: building empty dialog with no elements", false)
+  end
+  return ihkaz.runfunc({[0] = "OnDialogRequest",[1] = table.concat(self.result, "\n")}) or sendVariant({[0] = "OnDialogRequest",[1] = table.concat(self.result)})
 end
 
 return ihkaz
