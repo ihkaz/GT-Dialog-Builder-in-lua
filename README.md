@@ -5,6 +5,9 @@
 ```lua
 -- in GentaHax:
 ihkaz = load(makeRequest("https://raw.githubusercontent.com/ihkaz/GT-Dialog-Builder-in-lua/refs/heads/main/DialogBuilder.lua","GET").content)()
+-- if u run on Genta Hax Executor u don't need to do this:
+ihkaz.logfunc = LogToConsole -- Search ur executor function to log. make sure the function need 1 string parameter only
+ihkaz.runfunc = SendVariant
 -- GL terserah hehe
 ```
 # Function List
