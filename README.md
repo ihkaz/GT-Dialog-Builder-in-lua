@@ -1,2 +1,10 @@
 # GT-Dialog-Builder-in-lua
-Growtopia Dialog Builder in Lua hehe
+
+# Function List
+
+## Spacer
+#### • :addspacer(String size)
+```lua
+dialog = ihkaz.new()
+:addspacer("small")
+```
