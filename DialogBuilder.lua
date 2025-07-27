@@ -7,7 +7,7 @@ ihkaz.__index = ihkaz
 
 function ihkaz.logs(message, iserror)
   local tag = iserror and "`4ERROR``" or "LOGS"
-  local logMessage = string.format("`0[DIALOG BUILDER]`` %s", tag, message)
+  local logMessage = string.format("`0[DIALOG BUILDER]`` [%s] %s", tag, message)
   if iserror then
     local trace = debug.traceback("", 2)
     local lineInfo = trace:match("([^\n]*:%d+:)")
