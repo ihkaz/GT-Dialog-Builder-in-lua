@@ -201,7 +201,6 @@ Colors use the format `{Red, Green, Blue, Alpha}` where each value is 0-255:
 - **Blue**: `{0, 0, 255, 255}`
 - **Black**: `{0, 0, 0, 255}`
 - **White**: `{255, 255, 255, 255}`
-- **Transparent**: `{0, 0, 0, 0}`
 
 ### Growtopia Text Colors
 Common Growtopia color codes for `textcolor`
