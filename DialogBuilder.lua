@@ -199,4 +199,4 @@ function ihkaz:build()
   return table.concat(self.result, "\n")
 end
 
-return ihkaz
+return function() return iHkaz end
