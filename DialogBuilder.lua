@@ -7,7 +7,7 @@ ihkaz.__index = ihkaz
 
 function ihkaz.logs(message, iserror)
   local tag = iserror and "`4ERROR``" or "LOGS"
-  local logMessage = string.format("`0[DIALOG BUILDER]`` [%s] %s", tag, message)
+  local logMessage = string.format("`0[DIALOG BUILDER]`` %s", tag, message)
   if iserror then
     local trace = debug.traceback("", 2)
     local lineInfo = trace:match("([^\n]*:%d+:)")
@@ -17,6 +17,34 @@ function ihkaz.logs(message, iserror)
   end
   
   return ihkaz.logfunc(logMessage) or logToConsole(logMessage)
+end
+
+function ihkaz.importrttex(prefix)
+  local function save(path, data)
+    os.execute("mkdir -p " .. path:match("^(.*)/"))
+    local f = io.open(path, "w")
+    if f then f:write(data) f:close() end
+  end
+  if type(prefix) ~= "table" then
+    return ihkaz.logs("Error: expected table in importrttex()", true)
+  end
+  local items = #prefix > 0 and prefix or { prefix }
+  local base = "/storage/emulated/0/Android/data/com.rtsoft.growtopia/files/cache/interface/large/"
+  for _, v in ipairs(items) do
+    if not v.url or not v.name then
+      local m = (not v.name and "name" or "") .. ((not v.name and not v.url) and " and " or (not v.url and "url" or ""))
+      ihkaz.logs("Error: Missing " .. m .. " in importrttex()", true)
+    else
+      local r = makeRequest(v.url, "GET")
+      local d = r and r.content
+      if not d or d == "" then
+        ihkaz.logs("Error: Failed to fetch " .. v.name, true)
+      else
+        save(base .. v.name, d)
+        ihkaz.logs("Succes Import RTTEX File. Name : " .. v.name)
+      end
+    end
+  end
 end
 
 function ihkaz.new()
@@ -40,6 +68,7 @@ function ihkaz:_append(value)
   end
   table.insert(self.result, value)
 end
+
 
 function ihkaz:addspacer(size)
   if size and type(size) ~= "string" then
