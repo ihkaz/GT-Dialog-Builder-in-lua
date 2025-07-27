@@ -46,29 +46,52 @@ Downloads and saves RTTEX files from URLs to the Growtopia cache directory.
 
 **Parameters:**
 - `config` (table or array of tables): Configuration for files to download
-  - `url` (string, required): The URL to download the RTTEX file from
+  - `url` (string, required): The URL to download the RTTEX file from *(must be direct download link)*
   - `name` (string, required): The filename/path to save in cache (supports subdirectories)
+
+**URL Requirements:**
+- ✅ **Direct download links** (no redirects)
+- ✅ **Publicly accessible** (no authentication required)
+- ✅ **RTTEX file format**
+- ❌ **Shortened URLs** (bit.ly, tinyurl, etc.)
+- ❌ **File sharing pages** (Google Drive view links, Dropbox pages)
+- ❌ **Protected/private URLs**
 
 **Examples:**
 ```lua
 -- Import single RTTEX file
 ihkaz.importrttex({
-  url = "https://example.com/file.rttex",
+  url = "https://raw.githubusercontent.com/user/repo/main/file.rttex",  -- Direct GitHub raw link
   name = "custom_ui.rttex"
 })
 
 -- Import multiple RTTEX files
 ihkaz.importrttex({
-  {url = "https://example.com/button.rttex", name = "UI/button.rttex"},
-  {url = "https://example.com/icon.rttex", name = "ICONS/custom_icon.rttex"},
-  {url = "https://example.com/background.rttex", name = "BG/custom_bg.rttex"}
+  {url = "https://cdn.jsdelivr.net/gh/user/repo/button.rttex", name = "UI/button.rttex"},  -- CDN link
+  {url = "https://yourserver.com/direct/icon.rttex", name = "ICONS/custom_icon.rttex"},    -- Direct server link
+  {url = "https://drive.google.com/uc?export=download&id=FILE_ID", name = "BG/bg.rttex"}  -- Google Drive direct
 })
 
 -- Import to subdirectory (automatically creates directories)
 ihkaz.importrttex({
-  url = "https://example.com/special.rttex",
+  url = "https://cdn.example.com/special.rttex",
   name = "CUSTOM/SAVES/special_ui.rttex"
 })
+```
+
+**Supported URL Types:**
+```lua
+-- ✅ RECOMMENDED - These will work:
+"https://raw.githubusercontent.com/user/repo/main/file.rttex"           -- GitHub raw
+"https://cdn.jsdelivr.net/gh/user/repo@main/file.rttex"               -- jsDelivr CDN
+"https://yourserver.com/files/file.rttex"                             -- Direct server
+"https://drive.google.com/uc?export=download&id=YOUR_FILE_ID"         -- Google Drive direct
+
+-- ❌ AVOID - These won't work:
+"https://github.com/user/repo/blob/main/file.rttex"                   -- GitHub page (not raw)
+"https://drive.google.com/file/d/FILE_ID/view"                        -- Google Drive page
+"https://bit.ly/shortlink"                                            -- Shortened URL
+"https://dropbox.com/s/abc123/file.rttex?dl=0"                       -- Dropbox page
 ```
 
 **Features:**
@@ -76,6 +99,8 @@ ihkaz.importrttex({
 - ✅ **Batch Import** - Import multiple files in one call
 - ✅ **Error Handling** - Validates URLs and handles download failures
 - ✅ **Progress Logging** - Shows import status for each file
+- ✅ **Direct Download Support** - Works with GitHub, CDN, and direct server links
+- ⚠️ **URL Validation** - Requires publicly accessible direct download links
 
 **Storage Location (Android Only):**
 Files are saved to: `/storage/emulated/0/Android/data/com.rtsoft.growtopia/files/cache/interface/large/`
@@ -241,10 +266,11 @@ local menu = ihkaz.new()
 ### Importing Custom Assets *(Mobile Only)*
 ```lua
 -- Import custom UI elements for your dialogs (Android only)
+-- Use direct download links for best results
 ihkaz.importrttex({
-  {url = "https://myserver.com/ui/button_red.rttex", name = "CUSTOM/button_red.rttex"},
-  {url = "https://myserver.com/ui/button_blue.rttex", name = "CUSTOM/button_blue.rttex"},
-  {url = "https://myserver.com/backgrounds/wood.rttex", name = "BG/wood_texture.rttex"}
+  {url = "https://raw.githubusercontent.com/yourname/rttex-pack/main/button_red.rttex", name = "CUSTOM/button_red.rttex"},
+  {url = "https://cdn.jsdelivr.net/gh/yourname/rttex-pack/button_blue.rttex", name = "CUSTOM/button_blue.rttex"},
+  {url = "https://yourserver.com/direct/wood_texture.rttex", name = "BG/wood_texture.rttex"}
 })
 
 -- Files will be saved to (Android):
@@ -258,9 +284,10 @@ ihkaz.importrttex({
 ### Complete Example with RTTEX Import *(Mobile)*
 ```lua
 -- First, import custom RTTEX files (Android only)
+-- Make sure to use direct download URLs
 ihkaz.importrttex({
-  {url = "https://cdn.example.com/custom_button.rttex", name = "UI/custom_button.rttex"},
-  {url = "https://cdn.example.com/gold_border.rttex", name = "BORDERS/gold.rttex"}
+  {url = "https://raw.githubusercontent.com/yourrepo/assets/main/custom_button.rttex", name = "UI/custom_button.rttex"},
+  {url = "https://cdn.jsdelivr.net/gh/yourrepo/assets/gold_border.rttex", name = "BORDERS/gold.rttex"}
 })
 
 -- Then create a dialog (works on both mobile and desktop)
