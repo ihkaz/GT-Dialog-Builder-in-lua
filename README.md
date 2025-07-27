@@ -273,44 +273,6 @@ ihkaz.importrttex({
   {url = "https://yourserver.com/direct/wood_texture.rttex", name = "BG/wood_texture.rttex"}
 })
 
--- Files will be saved to (Android):
--- /storage/.../cache/interface/large/CUSTOM/button_red.rttex
--- /storage/.../cache/interface/large/CUSTOM/button_blue.rttex  
--- /storage/.../cache/interface/large/BG/wood_texture.rttex
-
--- Desktop users: Manually place files in Growtopia/interface/ folder
-```
-
-### Complete Example with RTTEX Import *(Mobile)*
-```lua
--- First, import custom RTTEX files (Android only)
--- Make sure to use direct download URLs
-ihkaz.importrttex({
-  {url = "https://raw.githubusercontent.com/yourrepo/assets/main/custom_button.rttex", name = "UI/custom_button.rttex"},
-  {url = "https://cdn.jsdelivr.net/gh/yourrepo/assets/gold_border.rttex", name = "BORDERS/gold.rttex"}
-})
-
--- Then create a dialog (works on both mobile and desktop)
-local dialog = ihkaz.new()
-  :setbody({
-    textcolor = "`6",  -- Gold text
-    bg = {25, 25, 25, 255},
-    border = {255, 215, 0, 255}  -- Gold border
-  })
-  :addlabel(false, {label = "Premium Shop", size = "big"})
-  :addspacer("small")
-  :addlabel(true, {label = "Special Items", size = "small", id = 1796})
-  :addsmalltext("Limited time offers available!")
-  :addspacer("small")
-  :addbutton(false, {value = "buy_gems", label = "Buy Gems"})
-  :addbutton(false, {value = "premium_pack", label = "Premium Pack"})
-  :addbutton(false, {value = "close", label = "Close"})
-  :setDialog({
-    name = "premium_shop",
-    closelabel = "Exit",
-    applylabel = "Purchase"
-  })
-  :showdialog()
 ```
 
 ## Color Reference
