@@ -296,21 +296,6 @@ The library includes comprehensive error handling:
 - **Graceful Fallbacks**: Works even if logging functions are unavailable
 - **RTTEX Import Validation**: Checks URLs and file names before attempting downloads
 
-## Best Practices
-
-### RTTEX File Management *(Mobile Only)*
-- Use descriptive subdirectory names (e.g., `UI/`, `ICONS/`, `BG/`)
-- Keep file names clear and consistent
-- Test URLs before batch importing
-- Check available storage space for large files
-- **Mobile users**: Use `ihkaz.importrttex()` for automatic download
-- **Desktop users**: Manually place RTTEX files in game directory
-
-### Dialog Design
-- Use consistent color schemes across dialogs
-- Test dialogs on different screen sizes
-- Provide clear button labels and meaningful values
-- Use spacers appropriately for visual hierarchy
 
 ## Contributing
 
