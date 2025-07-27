@@ -1,4 +1,4 @@
-# GT-Dialog-Builder-in-lua
+# Growtopia Dialog Builder in LUA
 
 A powerful and flexible dialog builder library for Growtopia Lua executors with comprehensive validation and error handling.
 
