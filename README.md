@@ -4,7 +4,7 @@
 # How to Load :
 ```lua
 -- in GentaHax:
-load(makeRequest("https://raw.githubusercontent.com/ihkaz/GT-Dialog-Builder-in-lua/refs/heads/main/DialogBuilder.lua","GET"))()
+ihkaz = load(makeRequest("https://raw.githubusercontent.com/ihkaz/GT-Dialog-Builder-in-lua/refs/heads/main/DialogBuilder.lua","GET"))()
 -- GL terserah hehe
 ```
 # Function List
@@ -20,7 +20,6 @@ dialog = ihkaz.new()
 ## Label
 #### • :addlabel(bool withicon, {String label, String size, ItemID id})
 ```lua
-ihkaz = load(makeRequest("https://raw.githubusercontent.com/ihkaz/GT-Dialog-Builder-in-lua/refs/heads/main/DialogBuilder.lua","GET"))()
 dialog = ihkaz.new()
 :addlabel(false,{label = "Aku Tidak Punya Icon",size = "small"})
 :addlabel(true,{label = "Aku Punya Icon",size = "small",id = 242})
@@ -30,7 +29,6 @@ dialog = ihkaz.new()
 ## Button
 #### • :addbutton(bool disable, {String value, String label})
 ```lua
-ihkaz = load(makeRequest("https://raw.githubusercontent.com/ihkaz/GT-Dialog-Builder-in-lua/refs/heads/main/DialogBuilder.lua","GET"))()
 dialog = ihkaz.new()
 :addbutton(false,{value = "ok_button", label = "OK"})
 :addbutton(true,{value = "disabled_btn", label = "Disabled Button"})
@@ -40,7 +38,6 @@ dialog = ihkaz.new()
 ## Small Text
 #### • :addsmalltext(String text)
 ```lua
-ihkaz = load(makeRequest("https://raw.githubusercontent.com/ihkaz/GT-Dialog-Builder-in-lua/refs/heads/main/DialogBuilder.lua","GET"))()
 dialog = ihkaz.new()
 :addsmalltext("This is small text")
 :addsmalltext("Another small text line")
@@ -50,7 +47,6 @@ dialog = ihkaz.new()
 ## Dialog Configuration
 #### • :setDialog({String name, String closelabel, String applylabel})
 ```lua
-ihkaz = load(makeRequest("https://raw.githubusercontent.com/ihkaz/GT-Dialog-Builder-in-lua/refs/heads/main/DialogBuilder.lua","GET"))()
 dialog = ihkaz.new()
 :addlabel(false,{label = "Example Dialog",size = "big"})
 :addbutton(false,{value = "ok", label = "OK"})
@@ -65,7 +61,6 @@ dialog = ihkaz.new()
 ## Body Styling
 #### • :setbody({Table border, Table bg, String textcolor})
 ```lua
-ihkaz = load(makeRequest("https://raw.githubusercontent.com/ihkaz/GT-Dialog-Builder-in-lua/refs/heads/main/DialogBuilder.lua","GET"))()
 dialog = ihkaz.new()
 :setbody({
   border = {255, 0, 0, 255},    -- Red border (R,G,B,A)
@@ -78,7 +73,6 @@ dialog = ihkaz.new()
 
 ## Complete Example
 ```lua
-ihkaz = load(makeRequest("https://raw.githubusercontent.com/ihkaz/GT-Dialog-Builder-in-lua/refs/heads/main/DialogBuilder.lua","GET"))()
 local dialog = ihkaz.new()
 :setbody({
   textcolor = "`0",
