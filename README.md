@@ -4,7 +4,7 @@
 # How to Load :
 ```lua
 -- in GentaHax:
-ihkaz = load(makeRequest("https://raw.githubusercontent.com/ihkaz/GT-Dialog-Builder-in-lua/refs/heads/main/DialogBuilder.lua","GET"))()
+ihkaz = load(makeRequest("https://raw.githubusercontent.com/ihkaz/GT-Dialog-Builder-in-lua/refs/heads/main/DialogBuilder.lua","GET").content)()
 -- GL terserah hehe
 ```
 # Function List
@@ -73,6 +73,7 @@ dialog = ihkaz.new()
 
 ## Complete Example
 ```lua
+ihkaz = load(makeRequest("https://raw.githubusercontent.com/ihkaz/GT-Dialog-Builder-in-lua/refs/heads/main/DialogBuilder.lua","GET").content)()
 local dialog = ihkaz.new()
 :setbody({
   textcolor = "`0",
