@@ -211,6 +211,7 @@ Configures the dialog's visual appearance.
   - `border` (table, optional): Border color as `{R, G, B, A}` (0-255)
   - `bg` (table, optional): Background color as `{R, G, B, A}` (0-255)
   - `textcolor` (string, optional): Growtopia color code
+  - `quickexit` (boolean, optional): Add Quick Exit (X)
 
 **Example:**
 ```lua
