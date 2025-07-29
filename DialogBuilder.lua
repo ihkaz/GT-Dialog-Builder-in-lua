@@ -218,7 +218,7 @@ function ihkaz:setbody(prefix)
   if defcolor then table.insert(temp, defcolor) end
   if border then table.insert(temp, border) end
   if bg then table.insert(temp, bg) end
-  if prefix.quickexit then table.insert(temp, "add_quick_exit|")
+  if prefix.quickexit then table.insert(temp, "add_quick_exit|") end
   
   for i = #temp, 1, -1 do
     self:_prepend(temp[i])
@@ -240,5 +240,4 @@ function ihkaz:showdialog()
   return ihkaz.runfunc({[0] = "OnDialogRequest",[1] = table.concat(self.result, "\n")}) or sendVariant({[0] = "OnDialogRequest",[1] = table.concat(self.result)})
 end
 
-dialog = ihkaz.new():setbody({quickexit = true,textcolor="`2"}):build()
-print(dialog)
+return ihkaz
