@@ -1,6 +1,4 @@
 local ihkaz = {
-  logfunc,
-  runfunc
 }
 ihkaz.__index = ihkaz
 
