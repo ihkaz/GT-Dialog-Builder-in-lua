@@ -1,4 +1,6 @@
 local ihkaz = {
+  runfunc = sendVariant,
+  logfunc = logToConsole
 }
 ihkaz.__index = ihkaz
 
