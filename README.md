@@ -151,6 +151,12 @@ dialog:addlabel(false, {label = "Simple Label", size = "small"})
 
 -- Label with icon
 dialog:addlabel(true, {label = "With Icon", size = "big", id = 242})
+
+-- Multiple
+dialog:addlabel(true, {
+  {label = "Label 1",size = "small",id = 7188},
+  {label = "Label 2",size = "big",id = 242}
+}
 ```
 
 #### `:addbutton(disable, config)`
@@ -169,6 +175,12 @@ dialog:addbutton(false, {value = "confirm", label = "Confirm"})
 
 -- Disabled button
 dialog:addbutton(true, {value = "disabled", label = "Disabled"})
+
+-- Multiple
+dialog:addbutton(false, {
+  {value = "button_1", label = "Button Number 1"},
+  {value = "button_2", label = "Button Number 2"},
+}
 ```
 
 #### `:addsmalltext(text)`
@@ -181,6 +193,9 @@ Adds small descriptive text.
 ```lua
 dialog:addsmalltext("This is small descriptive text")
 dialog:addsmalltext("Line 2 of small text")
+
+-- Multiple
+dialog:addsmalltext({"Number 1","Number 2"})
 ```
 
 ### Dialog Configuration
