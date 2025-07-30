@@ -69,15 +69,20 @@ function ihkaz:_append(value)
   table.insert(self.result, value)
 end
 
-
-function ihkaz:addspacer(size)
-  if size and type(size) ~= "string" then
-    ihkaz.logs("Error: spacer size must be a string", true)
-    return self
+function ihkaz:addspacer(size, count)
+  local spacer_size, spacer_count
+  if type(size) == "number" and count == nil then
+    spacer_size, spacer_count = "small", size
+  else
+    spacer_size = (type(size) == "string") and size or "small"
+    spacer_count = tonumber(count) or 1
   end
-  self:_append(string.format("add_spacer|%s|", size or "small"))
+  for _ = 1, math.max(1, spacer_count) do
+    self:_append(string.format("add_spacer|%s|", spacer_size))
+  end
   return self
 end
+
 
 function ihkaz:addlabel(withicon, prefix)
   local items = (type(prefix) == "table" and not prefix.label) and prefix or {prefix}
