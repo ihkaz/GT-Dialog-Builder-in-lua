@@ -125,16 +125,23 @@ Builds and displays the dialog immediately.
 
 ### Dialog Elements
 
-#### `:addspacer(size)`
-Adds a spacer element to create vertical spacing.
+#### `:addspacer(size, count)`
+Adds one or multiple spacer elements to create vertical spacing.
 
 **Parameters:**
 - `size` (string, optional): `"small"` or `"big"` (default: `"small"`)
+- `count` (number, optional): Number of spacers to add (default: `1`)
 
-**Example:**
+**Smart Usage:**
+- You can omit `size` and just pass the count directly. For example, `addspacer(3)` adds 3 small spacers.
+
+**Examples:**
 ```lua
-dialog:addspacer("small")
-dialog:addspacer("big")
+dialog:addspacer("small")       -- 1 small spacer
+dialog:addspacer("big")         -- 1 big spacer
+dialog:addspacer("big", 3)      -- 3 big spacers
+dialog:addspacer(5)             -- 5 small spacers (default size)
+dialog:addspacer(nil, 2)        -- 2 small spacers
 ```
 
 #### `:addlabel(withicon, config)`
