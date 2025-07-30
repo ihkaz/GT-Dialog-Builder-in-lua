@@ -80,30 +80,21 @@ function ihkaz:addspacer(size)
 end
 
 function ihkaz:addlabel(withicon, prefix)
-  if type(prefix) ~= "table" then
-    return ihkaz.logs("Error: expected table for second parameter in addlabel()", true)
+  local items = (type(prefix) == "table" and not prefix.label) and prefix or {prefix}
+  for _, v in ipairs(items) do
+    if type(v) ~= "table" then
+      ihkaz.logs("Error: each label must be a table", true)
+    elseif not v.label or v.label == "" then
+      ihkaz.logs("Error: label text is required and cannot be empty", true)
+    elseif withicon and (not v.id or v.id == "") then
+      ihkaz.logs("Error: icon id is required when withicon is true", true)
+    elseif v.size and type(v.size) ~= "string" then
+      ihkaz.logs("Error: label size must be a string", true)
+    else
+      local iconPart = withicon and v.id and (v.id .. "|") or ""
+      self:_append(string.format("add_label%s|%s|%s|left|%s", withicon and "_with_icon" or "", v.size or "small", v.label, iconPart))
+    end
   end
-  
-  if not prefix.label or prefix.label == "" then
-    ihkaz.logs("Error: label text is required and cannot be empty", true)
-    return self
-  end
-  
-  if withicon and (not prefix.id or prefix.id == "") then
-    ihkaz.logs("Error: icon id is required when withicon is true", true)
-    return self
-  end
-  
-  if prefix.size and type(prefix.size) ~= "string" then
-    ihkaz.logs("Error: label size must be a string", true)
-    return self
-  end
-  
-  local iconPart = ""
-  if withicon and prefix.id then
-    iconPart = prefix.id .. "|"
-  end
-  self:_append(string.format("add_label%s|%s|%s|left|%s", withicon and "_with_icon" or "", prefix.size or "small", prefix.label, iconPart))
   return self
 end
 
@@ -136,42 +127,31 @@ function ihkaz:setDialog(prefix)
 end
 
 function ihkaz:addbutton(disable, prefix)
-  if type(prefix) ~= "table" then
-    return ihkaz.logs("Error: expected table for second parameter in addbutton()", true)
+  local items = (type(prefix) == "table" and not prefix.value) and prefix or {prefix}
+  for _, v in ipairs(items) do
+    if type(v) ~= "table" then
+      ihkaz.logs("Error: each button must be a table", true)
+    elseif not v.value or v.value == "" then
+      ihkaz.logs("Error: button value is required and cannot be empty", true)
+    elseif not v.label or v.label == "" then
+      ihkaz.logs("Error: button label is required and cannot be empty", true)
+    else
+      self:_append(string.format("add_button|%s|%s|%s|0|0|", v.value, v.label, disable and "off" or "noflags"))
+    end
   end
-  
-  if not prefix.value or prefix.value == "" then
-    ihkaz.logs("Error: button value is required and cannot be empty", true)
-    return self
-  end
-  
-  if not prefix.label or prefix.label == "" then
-    ihkaz.logs("Error: button label is required and cannot be empty", true)
-    return self
-  end
-  
-  if disable ~= nil and type(disable) ~= "boolean" then
-    ihkaz.logs("Error: disable parameter must be a boolean", true)
-    return self
-  end
-  
-  self:_append(string.format("add_button|%s|%s|%s|0|0|", prefix.value, prefix.label, disable and "off" or "noflags"))
   return self
 end
 
-function ihkaz:addsmalltext(str)
-  if not str then
-    ihkaz.logs("Error: text parameter is required and cannot be nil", true)
-    return self
+function ihkaz:addsmalltext(text)
+  local texts = (type(text) == "table") and text or {text}
+  for _, v in ipairs(texts) do
+    local str = tostring(v or "")
+    if str == "" then
+      ihkaz.logs("Error: text cannot be empty", true)
+    else
+      self:_append("add_smalltext|" .. str .. "|")
+    end
   end
-  
-  local text = tostring(str)
-  if text == "" then
-    ihkaz.logs("Error: text cannot be empty", true)
-    return self
-  end
-  
-  self:_append("add_smalltext|" .. text .. "|")
   return self
 end
 
