@@ -3,8 +3,7 @@
 A powerful and flexible dialog builder library for Growtopia Lua executors with comprehensive validation and error handling.
 
 ## Join my Discord Server
-![Here](https://invidget.switchblade.xyz/tUbFwksa9r?theme=light)
-![Discord Server Invite](https://invite.casperiv.dev?inviteCode=tUbFwksa9r)](https://discord.gg/tUbFwksa9r)
+[![Click Me](https://invite.casperiv.dev?inviteCode=tUbFwksa9r)](https://discord.gg/tUbFwksa9r)
 
 ## Features
 - ✅ **Method Chaining** - Build dialogs fluently
