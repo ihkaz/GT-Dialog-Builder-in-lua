@@ -83,6 +83,14 @@ function ihkaz:addspacer(size, count)
   return self
 end
 -- add_image_button|ihkazbbanner|imagePath|flags|open|
+--add_banner|imagePath|x|y|
+function ihkaz:addbanner(prefix)
+  if type(prefix) ~= "table" then
+    return ihkaz.logs("Error: expected table for parameter in addbanner()", true)
+  end
+  self:_append(string.format("add_banner|%s|%d|%d|",prefix.path,prefix.size.x,prefix.size.y))
+  return self
+end
 function ihkaz:addimagebutton(prefix)
   if type(prefix) ~= "table" then
     return ihkaz.logs("Error: expected table for parameter in addimagebutton()", true)
