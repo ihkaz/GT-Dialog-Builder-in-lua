@@ -82,7 +82,20 @@ function ihkaz:addspacer(size, count)
   end
   return self
 end
-
+-- add_image_button|ihkazbbanner|imagePath|flags|open|
+function ihkaz:addimagebutton(prefix)
+  if type(prefix) ~= "table" then
+    return ihkaz.logs("Error: expected table for parameter in addimagebutton()", true)
+  end
+  if not prefix.name then
+    return ihkaz.logs("Error: Missing name in addimagebutton()", true)
+  end
+  if not prefix.path then
+    return ihkaz.logs("Error: Missing path in addimagebutton()", true)
+  end
+  self:_append(string.format("add_image_button|%s|%s|bannerlayout|OPENSURVEY|||||||||||",prefix.name,prefix.path))
+  return self
+end
 
 function ihkaz:addlabel(withicon, prefix)
   local items = (type(prefix) == "table" and not prefix.label) and prefix or {prefix}
