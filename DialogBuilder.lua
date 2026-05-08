@@ -10,12 +10,19 @@ local ENV = {
 
 -- ── RTTEX Path ────────────────────────────────────────────────
 local RTTEX_PATH = "/storage/emulated/0/Android/data/com.rtsoft.growtopia/files/cache/interface/large/"
+local RTTEX_PATH_GL = "/storage/emulated/0/Android/data/launcher.powerkuy.growlauncher/files/cache/interface/large/""
+local function getActivePath()
+    if ENV.isGrowLauncher then
+        return RTTEX_PATH_GL
+    end
+    return RTTEX_PATH
+end
 
 -- ── Permission Check ──────────────────────────────────────────
 local function checkRttexPermission()
-    -- Coba buat file test di path RTTEX
-    local testpath = RTTEX_PATH .. ".perm_test"
-    os.execute("mkdir -p " .. RTTEX_PATH .. " 2>/dev/null")
+    local activePath = getActivePath()
+    local testpath = activePath .. ".perm_test"
+    os.execute("mkdir -p " .. activePath .. " 2>/dev/null")
     local f = io.open(testpath, "w")
     if f then
         f:close()
@@ -82,11 +89,13 @@ function ihkaz.importrttex(prefix)
 
     -- Permission check
     if not checkRttexPermission() then
-        logger("Error: No write permission to RTTEX path: " .. RTTEX_PATH, true)
+        local activePath = getActivePath()
+        logger("Error: No write permission to RTTEX path: " .. activePath, true)
         logger("Tip: Growtopia harus sudah pernah dibuka setidaknya sekali", false)
         return false
     end
 
+    local activePath = getActivePath()
     local items = #prefix > 0 and prefix or {prefix}
 
     for _, v in ipairs(items) do
@@ -100,8 +109,8 @@ function ihkaz.importrttex(prefix)
             if not data or data == "" then
                 logger("Error: Failed to fetch " .. v.name, true)
             else
-                os.execute("mkdir -p " .. RTTEX_PATH)
-                local f = io.open(RTTEX_PATH .. v.name, "w")
+                os.execute("mkdir -p " .. activePath)
+                local f = io.open(activePath .. v.name, "w")
                 if f then
                     f:write(data)
                     f:close()
