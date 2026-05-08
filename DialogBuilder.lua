@@ -10,7 +10,7 @@ local ENV = {
 
 -- ── RTTEX Path ────────────────────────────────────────────────
 local RTTEX_PATH = "/storage/emulated/0/Android/data/com.rtsoft.growtopia/files/cache/interface/large/"
-local RTTEX_PATH_GL = "/storage/emulated/0/Android/data/launcher.powerkuy.growlauncher/files/cache/interface/large/""
+local RTTEX_PATH_GL = "/storage/emulated/0/Android/data/launcher.powerkuy.growlauncher/files/cache/interface/large/"
 local function getActivePath()
     if ENV.isGrowLauncher then
         return RTTEX_PATH_GL
